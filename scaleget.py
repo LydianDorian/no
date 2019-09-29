@@ -143,7 +143,7 @@ G_Aeolian = ["G Aeolian "] + Bb_Ionian[6:] + Bb_Ionian[1:6]
 A_Locrian = ["A Locrian "] + Bb_Ionian[7:] + Bb_Ionian[1:7]
 
 
-B_Ionian = ["B Ionian", "B","C#","D#","E","F#","G#","A#"]
+B_Ionian = ["B Ionian ", "B","C#","D#","E","F#","G#","A#"]
 Db_Dorian = ["Db Dorian "] + B_Ionian[2:] + B_Ionian[1:2]
 Eb_Phrygian = ["Eb Phrygian "] + B_Ionian[3:] + B_Ionian[1:3]
 E_Lydian = ["Eb Lydian "] + B_Ionian[4:] + B_Ionian[1:4]
@@ -279,7 +279,7 @@ Bb_Locrian
 import sys
 
 while True:
-    print('\n' + '1 : root-interval scale namer' + '\n' + '2 : scale suggester' + '\n' + '3 : random scale' + '\n' + 'e to exit' + '\n')
+    print('\n' + '1 : root-interval scale namer' + '\n' + '2 : scale suggester' + '\n' + '3 : scale suggester (given root note)' + '\n'+ '4 : random scale' + '\n' + 'e to exit' + '\n')
     s = input()
 
     if s == 'e':
@@ -342,16 +342,27 @@ while True:
 
 
 
-    elif int(s) == 2:
+    elif int(s) == 2: #scale suggester all scales which contain given notes
         print("enter a series of notes.  e for menu")
         notes = sys.stdin.readline().split()
-        #specify root note, selection statement if all in AND root is [1] of scale
+        
         output = ["".join(scale) for scale in scales if all(elem in scale for elem in notes)]
         #less efficient going through the for loop twice but looks much more readable, fix
         for line in output:
             print(line)
-    
-    elif int(s) == 3:
+
+
+    elif int(s) == 3: #specify root note, selection statement if all in AND root is [1] of scale
+        print("enter a root note followed by additional notes.  e for menu")
+        notes = sys.stdin.readline().split()
+        #specify root note, selection statement if all in AND root is [1] of scale
+        output = ["".join(scale) for scale in scales if all(elem in scale for elem in notes) and notes[0] == scale[1]]
+        #less efficient going through the for loop twice but looks much more readable, fix
+        for line in output:
+            print(line)
+
+
+    elif int(s) == 4: #random scale (with notes/steps)
         print("".join(random.choice(scales)))
 
 
